@@ -1,0 +1,588 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/link": {
+            "post": {
+                "operationId": "createLink",
+                "summary": "Create a new link",
+                "description": "Start linking a new end user account for agent interaction. This operation will return a link, which you can pass to your frontend to present linking iFrame (or React component) logic. ",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateLinkDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Link has been created and ready to use.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LinkDto"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "BadRequestException": {
+                                        "description": "Bad Request",
+                                        "value": {
+                                            "statusCode": 400,
+                                            "message": "Bad Request",
+                                            "error": "Bad Request"
+                                        }
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "number",
+                                            "example": 400
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad Request"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Bad Request"
+                                        }
+                                    },
+                                    "required": [
+                                        "statusCode",
+                                        "message"
+                                    ]
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "404": {
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "NotFoundException": {
+                                        "description": "The application requested was not found",
+                                        "value": {
+                                            "statusCode": 404,
+                                            "message": "Not Found",
+                                            "error": "Not Found"
+                                        }
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "description": "The application requested was not found",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "number",
+                                            "example": 404
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Not Found"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Not Found"
+                                        }
+                                    },
+                                    "required": [
+                                        "statusCode",
+                                        "message"
+                                    ]
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "link"
+                ],
+                "security": [
+                    {
+                        "apikey": []
+                    }
+                ]
+            }
+        },
+        "/link/{linkId}": {
+            "get": {
+                "operationId": "getLink",
+                "summary": "Get the status of a link",
+                "description": "This endpoint is used to get the status of a link that was created earlier.",
+                "parameters": [
+                    {
+                        "name": "linkId",
+                        "required": true,
+                        "in": "path",
+                        "description": "The ID of the link that was returned by creation endpoint earlier. ",
+                        "schema": {
+                            "example": "link_123"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Status of the link",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LinkDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "link"
+                ],
+                "security": [
+                    {
+                        "apikey": []
+                    }
+                ]
+            }
+        },
+        "/proxy": {
+            "post": {
+                "operationId": "createProxy",
+                "summary": "Create a new proxy",
+                "description": "Start proxying an end user account for agent interaction. ",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateProxyDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Proxy is ready to use.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProxyDto"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "BadRequestException": {
+                                        "description": "The account is not in a valid state for proxy",
+                                        "value": {
+                                            "statusCode": 400,
+                                            "message": "Bad Request",
+                                            "error": "Bad Request"
+                                        }
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "description": "The account is not in a valid state for proxy",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "number",
+                                            "example": 400
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad Request"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Bad Request"
+                                        }
+                                    },
+                                    "required": [
+                                        "statusCode",
+                                        "message"
+                                    ]
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "404": {
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "NotFoundException": {
+                                        "description": "The account either does not exist or is not in your tenant",
+                                        "value": {
+                                            "statusCode": 404,
+                                            "message": "Not Found",
+                                            "error": "Not Found"
+                                        }
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "description": "The account either does not exist or is not in your tenant",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "number",
+                                            "example": 404
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Not Found"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Not Found"
+                                        }
+                                    },
+                                    "required": [
+                                        "statusCode",
+                                        "message"
+                                    ]
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "proxy"
+                ],
+                "security": [
+                    {
+                        "apikey": []
+                    }
+                ]
+            }
+        },
+        "/account": {
+            "get": {
+                "operationId": "getAccounts",
+                "summary": "Get all accounts",
+                "description": "Get all accounts in the organization",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccountsDto"
+                                }
+                            }
+                        }
+                    },
+                    "302": {
+                        "description": "List of accounts",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccountsDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apikey": []
+                    }
+                ],
+                "tags": []
+            }
+        },
+        "/account/{accountId}": {
+            "get": {
+                "operationId": "getAccount",
+                "summary": "Get an account",
+                "description": "Get a specific accounts in the organization",
+                "parameters": [
+                    {
+                        "name": "accountId",
+                        "required": true,
+                        "in": "path",
+                        "description": "The ID of the account",
+                        "schema": {
+                            "example": "acct_123",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccountDto"
+                                }
+                            }
+                        }
+                    },
+                    "302": {
+                        "description": "Account requested",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccountDto"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "NotFoundException": {
+                                        "description": "Account not found",
+                                        "value": {
+                                            "statusCode": 404,
+                                            "message": "Not Found",
+                                            "error": "Not Found"
+                                        }
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "description": "Account not found",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "number",
+                                            "example": 404
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Not Found"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Not Found"
+                                        }
+                                    },
+                                    "required": [
+                                        "statusCode",
+                                        "message"
+                                    ]
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                },
+                "security": [
+                    {
+                        "apikey": []
+                    }
+                ],
+                "tags": []
+            }
+        }
+    },
+    "info": {
+        "title": "Statics API",
+        "description": "Helping you link external accounts to your agents",
+        "version": "1.0",
+        "contact": {}
+    },
+    "tags": [],
+    "servers": [
+        {
+            "url": "https://api.statics.ai"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "apikey": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "x-statics-api-key",
+                "description": "API key obtained from your Statics developer console, starting with sk_. Please ensure to keep this key secure. "
+            }
+        },
+        "schemas": {
+            "CreateLinkDto": {
+                "type": "object",
+                "properties": {
+                    "appId": {
+                        "type": "string",
+                        "description": "ID of the application that you are trying to link"
+                    }
+                },
+                "required": [
+                    "appId"
+                ]
+            },
+            "LinkDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique immutable identifier of the link",
+                        "example": "link_q7iCZo7CZXFTKBgqeDRfh"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "The current status of the link",
+                        "example": "READY",
+                        "enum": [
+                            "UNINITIALIZED",
+                            "CONNECTING",
+                            "READY",
+                            "CLOSED"
+                        ]
+                    },
+                    "linkToken": {
+                        "type": "string",
+                        "description": "The link token for frontend to start authentication flow",
+                        "example": "lkt_123"
+                    },
+                    "accountId": {
+                        "type": "string",
+                        "description": "Unique immutable identifier of the account",
+                        "example": "acct_123"
+                    }
+                },
+                "required": [
+                    "id",
+                    "status",
+                    "linkToken"
+                ]
+            },
+            "CreateProxyDto": {
+                "type": "object",
+                "properties": {
+                    "accountId": {
+                        "type": "string",
+                        "description": "ID of the account you are trying to access"
+                    }
+                },
+                "required": [
+                    "accountId"
+                ]
+            },
+            "ProxyDto": {
+                "type": "object",
+                "properties": {
+                    "accountId": {
+                        "type": "string",
+                        "description": "Associated account ID for this proxy",
+                        "example": "acct_q7iCZo7CZXFTKBgqeDRfh"
+                    },
+                    "host": {
+                        "type": "string",
+                        "description": "Proxy hostname (FQDN) that your client should connect to. Do not cache this value; it should be requested every time you connect to the proxy.",
+                        "example": "proxy1.net.statics.ai"
+                    },
+                    "port": {
+                        "type": "number",
+                        "description": "Proxy port that your client should connect to. Do not cache this value; it should be requested every time you connect to the proxy.",
+                        "example": "38918"
+                    },
+                    "username": {
+                        "type": "string",
+                        "description": "Username for connection to the proxy, typically in the same format as a link ID.",
+                        "example": "link_7iCZo7CZXFTKBgqeDRfh"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Password for connection to the proxy. Do not cache this value - this value may change from time to time. ",
+                        "example": "pxypwd_du71jdlasfau9eho2j"
+                    },
+                    "connectionString": {
+                        "type": "string",
+                        "description": "Connection string to use to connect to the proxy",
+                        "example": "http://link_7iCZo7CZXFTKBgqeDRfh:pxypwd_du71jdlasfau9eho2j@proxy1.net.statics.ai:38918"
+                    }
+                },
+                "required": [
+                    "accountId",
+                    "host",
+                    "port",
+                    "username",
+                    "password",
+                    "connectionString"
+                ]
+            },
+            "AccountsDto": {
+                "type": "object",
+                "properties": {
+                    "accounts": {
+                        "description": "List of accounts",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AccountDto"
+                        }
+                    }
+                },
+                "required": [
+                    "accounts"
+                ]
+            },
+            "AccountDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique immutable identifier of the account",
+                        "example": "acct_123"
+                    },
+                    "orgId": {
+                        "type": "string",
+                        "description": "Organization ID associated with the account",
+                        "example": "org_123"
+                    },
+                    "appId": {
+                        "type": "string",
+                        "description": "Application ID associated with the account",
+                        "example": "app_123"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Status of the account",
+                        "example": "ACTIVE",
+                        "enum": [
+                            "ACTIVE",
+                            "CLOSED",
+                            "NEEDS_REFRESH"
+                        ]
+                    },
+                    "createdAt": {
+                        "format": "date-time",
+                        "type": "string",
+                        "description": "Timestamp when the account was created",
+                        "example": "2023-01-01T00:00:00.000Z"
+                    },
+                    "updatedAt": {
+                        "format": "date-time",
+                        "type": "string",
+                        "description": "Timestamp when the account was last updated",
+                        "example": "2023-01-01T00:00:00.000Z"
+                    }
+                },
+                "required": [
+                    "id",
+                    "orgId",
+                    "appId",
+                    "status",
+                    "createdAt",
+                    "updatedAt"
+                ]
+            }
+        }
+    }
+}
