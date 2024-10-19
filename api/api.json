@@ -298,12 +298,14 @@
                         }
                     }
                 },
+                "tags": [
+                    "account"
+                ],
                 "security": [
                     {
                         "apikey": []
                     }
-                ],
-                "tags": []
+                ]
             }
         },
         "/account/{accountId}": {
@@ -384,12 +386,14 @@
                         "description": ""
                     }
                 },
+                "tags": [
+                    "account"
+                ],
                 "security": [
                     {
                         "apikey": []
                     }
-                ],
-                "tags": []
+                ]
             }
         }
     },
@@ -411,7 +415,7 @@
                 "type": "apiKey",
                 "in": "header",
                 "name": "x-statics-api-key",
-                "description": "API key obtained from your Statics developer console, starting with sk_. Please ensure to keep this key secure. "
+                "description": "API key obtained from your Statics developer console, starting with sk_. Please keep this key secure and do not commit it to your repository."
             }
         },
         "schemas": {
